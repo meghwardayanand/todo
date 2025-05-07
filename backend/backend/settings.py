@@ -34,6 +34,10 @@ DATABASE_PASSWORD = 'postgres'
 DATABASE_HOST = 'localhost'
 DATABASE_PORT = 5432
 
+# CORS CONFIGURATIONS
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000"] # i.e. frontend local url for REACT JS APP
+CORS_ALLOW_CREDENTIALS = True
+
 
 # Application definition
 
@@ -48,7 +52,9 @@ BUILT_IN_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
-    'drf_yasg',
+    'drf_yasg',         # for swagger documentation
+    'debug_toolbar',    # for optimizing APIs
+    'corsheaders',      # for CORS (Cross Origin Resource Sharing) security feature.
 ]
 
 LOCAL_APPS = [
@@ -60,6 +66,7 @@ INSTALLED_APPS = BUILT_IN_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

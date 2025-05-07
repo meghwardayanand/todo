@@ -1,0 +1,6 @@
+[run]
+source = todo
+
+[report]
+omit =
+    */migrations/*
