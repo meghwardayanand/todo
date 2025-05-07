@@ -29,7 +29,11 @@ schema_view = get_schema_view(
       default_version='v1',
       description="Todo List APIs",
       terms_of_service="https://www.google.com/policies/terms/",
+<<<<<<< HEAD
       contact=openapi.Contact(email="contact@snippets.local"),
+=======
+      contact=openapi.Contact(email="meghwardayanand@gmail.com"),
+>>>>>>> b5be0326a47038e4b2a686c8cb863ea0219b4cd6
       license=openapi.License(name="BSD License"),
    ),
    public=True,

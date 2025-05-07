@@ -52,9 +52,13 @@ BUILT_IN_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
+<<<<<<< HEAD
     'drf_yasg',         # for swagger documentation
     'debug_toolbar',    # for optimizing APIs
     'corsheaders',      # for CORS (Cross Origin Resource Sharing) security feature.
+=======
+    'drf_yasg',
+>>>>>>> b5be0326a47038e4b2a686c8cb863ea0219b4cd6
 ]
 
 LOCAL_APPS = [
