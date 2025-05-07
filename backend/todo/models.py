@@ -11,11 +11,7 @@ class TodoItem(models.Model):
         FINISHED = 'F', _('Finished')
 
 
-<<<<<<< HEAD
     title = models.CharField(max_length=255)
-=======
-    title = models.CharField(max_length=200)
->>>>>>> b5be0326a47038e4b2a686c8cb863ea0219b4cd6
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
