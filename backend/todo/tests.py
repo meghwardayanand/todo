@@ -175,3 +175,86 @@ def test_todo_item_str(api_client, user):
 
     todo_item = TodoItem.objects.filter(id=todo_item_id).first()
     assert str(todo_item).startswith(f'{todo_item_id} | Buy Milk | {user}')
+
+@pytest.mark.django_db
+def test_get_todos_list_by_users(api_client, user, super_user, staff_user):
+    url = '/todos/v1/todos/'
+    user_payload = {
+        'title': 'Buy Milk',
+        'description': 'Buy 2 gallons of milk',
+    }
+    staff_payload = {
+        'title': 'Buy Eggs',
+        'description': 'Buy 2 dozen of eggs',
+    }
+
+
+    # Add by normal user
+    response = api_client.post(url, data=user_payload, format='json')
+    assert response.status_code == status.HTTP_201_CREATED
+    assert response.data['title'] == user_payload['title']
+    assert response.data['description'] == user_payload['description']
+    assert response.data['owner'] == user.id
+
+    # Get by normal user (for successful verification)
+    user_todo_item_id = response.data['id']
+    response = api_client.get(f'{url}{user_todo_item_id}/', format='json')
+    assert response.status_code == status.HTTP_200_OK
+    assert response.data['title'] == user_payload['title']
+    assert response.data['description'] == user_payload['description']
+    assert response.data['owner'] == user.id
+
+    # Authenticate Staff User
+    api_client.force_authenticate(user=staff_user)
+    # Add by staff user
+    response = api_client.post(url, data=staff_payload, format='json')
+    assert response.status_code == status.HTTP_201_CREATED
+    assert response.data['title'] == staff_payload['title']
+    assert response.data['description'] == staff_payload['description']
+    assert response.data['owner'] == staff_user.id
+
+    # Get by staff user (for successful verification)
+    staff_user_todo_item_id = response.data['id']
+    response = api_client.get(f'{url}{staff_user_todo_item_id}/', format='json')
+    assert response.status_code == status.HTTP_200_OK
+    assert response.data['title'] == staff_payload['title']
+    assert response.data['description'] == staff_payload['description']
+    assert response.data['owner'] == staff_user.id
+    assert response.data['owner'] != user.id
+    assert response.data['owner'] != super_user.id
+
+
+    # Test list by normal user
+    api_client.force_authenticate(user=user)
+    response = api_client.get(url, format='json')
+    assert response.status_code == status.HTTP_200_OK
+    assert len(response.data) == 1
+    assert response.data[0]['title'] == user_payload['title']
+    assert response.data[0]['description'] == user_payload['description']
+    assert response.data[0]['owner'] == user.id
+
+
+    # Test list by staff user
+    api_client.force_authenticate(user=staff_user)
+    response = api_client.get(url, format='json')
+    assert response.status_code == status.HTTP_200_OK
+    assert len(response.data) == 2
+    assert response.data[0]['title'] == user_payload['title']
+    assert response.data[0]['description'] == user_payload['description']
+    assert response.data[0]['owner'] == user.id
+    assert response.data[1]['title'] == staff_payload['title']
+    assert response.data[1]['description'] == staff_payload['description']
+    assert response.data[1]['owner'] == staff_user.id
+
+
+    # Test list by superuser user
+    api_client.force_authenticate(user=super_user)
+    response = api_client.get(url, format='json')
+    assert response.status_code == status.HTTP_200_OK
+    assert len(response.data) == 2
+    assert response.data[0]['title'] == user_payload['title']
+    assert response.data[0]['description'] == user_payload['description']
+    assert response.data[0]['owner'] == user.id
+    assert response.data[1]['title'] == staff_payload['title']
+    assert response.data[1]['description'] == staff_payload['description']
+    assert response.data[1]['owner'] == staff_user.id

@@ -38,6 +38,19 @@ DATABASE_PORT = 5432
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000"] # i.e. frontend local url for REACT JS APP
 CORS_ALLOW_CREDENTIALS = True
 
+# FOR REST FRAMEWORK --> Swagger
+# LOGIN_URL = '/api-auth/login/'
+# LOGIN_REDIRECT_URL = '/swagger/'
+# LOGOUT_URL = '/api-auth/logout/'
+# LOGOUT_REDIRECT_URL = '/api-auth/login/'
+
+# FOR NORMAL LOGIN --> Swagger
+LOGIN_URL = '/users/v1/signin/'
+LOGIN_REDIRECT_URL = '/swagger/'
+LOGOUT_URL = '/users/v1/signout/'
+# LOGOUT_REDIRECT_URL = '/users/v1/signin/'
+# LOGOUT_REDIRECT_URL = None
+
 
 # Application definition
 
@@ -52,6 +65,7 @@ BUILT_IN_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
+    'rest_framework.authtoken',
     'drf_yasg',         # for swagger documentation
     'debug_toolbar',    # for optimizing APIs
     'corsheaders',      # for CORS (Cross Origin Resource Sharing) security feature.
@@ -59,6 +73,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     'todo',
+    'users',
 ]
 
 INSTALLED_APPS = BUILT_IN_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -108,6 +123,18 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
+
+# REST FRAMEWORK SETTINGS
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
 }
 
 

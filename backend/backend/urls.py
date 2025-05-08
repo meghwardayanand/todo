@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from rest_framework import permissions
+from rest_framework.authtoken.views import obtain_auth_token
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
@@ -40,6 +41,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('todos/v1/', include('todo.urls')),
+    path('users/v1/', include('users.urls')), # BASIC AUTHENTICATION
 
     # API Documentation
     path('swagger.<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
@@ -47,4 +49,5 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
     path("api-auth/", include('rest_framework.urls', namespace='rest_framework')),
+    path('api-token-auth/', obtain_auth_token, name='obtain-token'), # TOKEN AUTHENTICATION
 ]
