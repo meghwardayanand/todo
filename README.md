@@ -1,4 +1,8 @@
-# STEPS
+<details>
+<summary>
+
+# Steps Taken During Development
+</summary>
 
 ## Step 00: Install Python
 1. Install as per instructions at `https://www.python.org/downloads/`.
@@ -37,3 +41,251 @@
 3. Register app in `settings.py` file.
 4. Create superuser with command `python manage.py createsuperuser` and provide username, password, and confirm password.
 5. Start server and verify.
+
+</details>
+
+<hr />
+
+<details>
+<summary>
+
+# Steps To Use Run This Project
+</summary>
+
+## Step 01: Clone the repository
+1. Execute `git clone "https://github.com/meghwardayanand/todo"`
+2. Execute `cd todo/`
+
+## Step 02: Create & Activate Virtual Environment
+1. Execute `pip install virtualenv` command to install virtual environment manager.
+2. Execute `virtualenv .env` command to create a virtual environment with name `.env`.
+3. Execute `source .env/bin/activate` to activate the environment.
+
+## Step 03: Install Dependencies
+1. Execute `pip install --upgrade pip`
+2. Execute `pip install -r requirements.txt`
+
+## Step 04: Setup PostgreSQL Database with following Configurations
+<code>
+    DATABASE_NAME = 'postgres'
+    DATABASE_USER = 'postgres'
+    DATABASE_PASSWORD = 'postgres'
+    DATABASE_HOST = 'localhost'
+    DATABASE_PORT = 5432
+</code>
+
+## Step 05: Move to "backend" Directory.
+1. Execute `cd backend`
+
+## Step 06: Migrate & Create Super User
+1. Execute `python manage.py migrate`
+2. Execute `python manage.py createsuperuser`
+3. Enter Username
+4. Enter Email
+5. Enter Password & Confirmation Password
+
+## Step 07: Run Development Server
+* Execute `python manage.py runserver`
+
+## Step 08: Visit URLs
+1. `http://localhost:8000/users/v1/sigin/` to Sign in which will redirect to `Swagger API Documentation`.
+2. `http://localhost:8000/admin` and Enter super user's credentials created in "Step 06" to check admin panel.
+
+## Step 09: Play with APIs/Endpoints.
+
+</details>
+
+<hr />
+
+<details open>
+<summary>
+
+# API Documentation
+</summary>
+
+**Base URL:** `http://localhost:8000` (Add this base url before appending any of the following urls/endpoints.)  
+**Consumes/Accepts:** `application/json`  
+**Produces/Returns:** `application/json`  
+
+---
+
+## Authentication
+
+### POST `/api-token-auth/`
+Request a token for Basic authentication.
+* **Request Body:**
+  ```json
+  {
+    "username": "<string>",
+    "password": "<string>"
+  }
+  ```
+* **Response (201):**
+  ```json
+  {
+    "token": "<string>"
+  }
+  ```
+---
+
+## TODO APP
+
+### GET `/todos/v1/todos/`
+Retrieve a list of all todo items.
+* **Response (200):**
+  ```json
+  [
+    {
+      "id": 1,
+      "title": "<string>",
+      "description": "<string>",
+      "created_at": "<date-time>",
+      "updated_at": "<date-time>",
+      "status": "C|I|F",
+      "owner": 123
+    }
+  ]
+  ```
+
+### POST `/todos/v1/todos/`
+Create a new todo item.
+* **Request Body:**
+  * `title` is required
+  * `description` is required  
+
+  ```json
+  {
+    "title": "<string>",
+    "description": "<string>",
+    "created_at": "<date-time>",
+    "updated_at": "<date-time>",
+    "status": "C|I|F",
+    "owner": 123
+  }
+  ```
+* **Response (201):**
+  ```json
+  {
+    "id": 1,
+    "title": "<string>",
+    "description": "<string>",
+    "created_at": "<date-time>",
+    "updated_at": "<date-time>",
+    "status": "C|I|F",
+    "owner": 123
+  }
+  ```
+
+### GET `/todos/v1/todos/{id}/`
+Retrieve a specific todo item by its ID.
+* **Path Parameter:**
+  * `id` (integer, required): A unique integer value identifying this todo item.
+* **Response (200):**
+  ```json
+  {
+    "id": 1,
+    "title": "<string>",
+    "description": "<string>",
+    "created_at": "<date-time>",
+    "updated_at": "<date-time>",
+    "status": "C|I|F",
+    "owner": 123
+  }
+  ```
+
+### PUT `/todos/v1/todos/{id}/`
+Update a specific todo item.
+* **Path Parameter:**
+  * `id` (integer, required): A unique integer value identifying this todo item.
+* **Request Body:**
+  * `title` is required
+  * `description` is required  
+
+  ```json
+  {
+    "title": "<string>",
+    "description": "<string>",
+    "created_at": "<date-time>",
+    "updated_at": "<date-time>",
+    "status": "C|I|F",
+    "owner": 123
+  }
+  ```
+* **Response (200):**
+  ```json
+  {
+    "id": 1,
+    "title": "<string>",
+    "description": "<string>",
+    "created_at": "<date-time>",
+    "updated_at": "<date-time>",
+    "status": "C|I|F",
+    "owner": 123
+  }
+  ```
+
+### DELETE `/todos/v1/todos/{id}/`
+Delete a specific todo item.
+* **Path Parameter:**
+  * `id` (integer, required): A unique integer value identifying this todo item.
+* **Response (204):** No content.
+
+---
+
+## USERS APP
+
+### POST `/users/v1/signin/`
+Sign in an existing user.
+* **Request Body:**
+  * `username` is required
+  * `password` is required  
+
+  ```json
+  {
+    "username": "<string>",
+    "password": "<string>"
+  }
+  ```
+* **Response (200):**
+  ```json
+  {
+    "username": "<string>",
+    "token": "<string>"
+  }
+  ```
+
+### POST `/users/v1/signout/`
+Sign out the current user.
+* **Response (201):** No content.
+OR
+* **Response (200):**
+  ```json
+    {
+        "message": "Logged out successfully!"
+    }
+  ```
+
+### POST `/users/v1/signup/`
+Register a new user.
+* **Request Body:**
+  * `username` is required
+  * `password` is required  
+  * `confirm_password` is required
+  * `password` and `confirm_password` should match.   
+
+  ```json
+  {
+    "username": "<string>",
+    "password": "<string>",
+    "confirm_password": "<string>"
+  }
+  ```
+* **Response (201):**
+  ```json
+  {
+    "username": "<string>",
+    "token": "<string>"
+  }
+  ```
+
+</details>
