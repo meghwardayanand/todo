@@ -175,7 +175,6 @@ def test_todo_item_str(api_client, user):
 
     todo_item = TodoItem.objects.filter(id=todo_item_id).first()
     assert str(todo_item).startswith(f'{todo_item_id} | Buy Milk | {user}')
-<<<<<<< HEAD
 
 @pytest.mark.django_db
 def test_get_todos_list_by_users(api_client, user, super_user, staff_user):
@@ -259,5 +258,3 @@ def test_get_todos_list_by_users(api_client, user, super_user, staff_user):
     assert response.data[1]['title'] == staff_payload['title']
     assert response.data[1]['description'] == staff_payload['description']
     assert response.data[1]['owner'] == staff_user.id
-=======
->>>>>>> 0c375e4a81df4ee2464fe3d9b3530f7cee7e2ced

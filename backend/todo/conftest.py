@@ -12,7 +12,6 @@ def api_client():
 @pytest.fixture
 def user():
     """Create and return a test user."""
-<<<<<<< HEAD
     return User.objects.create_user(username="test_user", password="testpass")
 
 @pytest.fixture
@@ -32,9 +31,6 @@ def staff_user():
         password="testpass",
         is_staff=True
     )
-=======
-    return User.objects.create_user(username="testuser", password="testpass")
->>>>>>> 0c375e4a81df4ee2464fe3d9b3530f7cee7e2ced
 
 @pytest.fixture(autouse=True)
 def authenticate(api_client, user):
