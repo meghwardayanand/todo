@@ -38,6 +38,7 @@ DATABASE_PORT = 5432
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000"] # i.e. frontend local url for REACT JS APP
 CORS_ALLOW_CREDENTIALS = True
 
+<<<<<<< HEAD
 # FOR REST FRAMEWORK --> Swagger
 # LOGIN_URL = '/api-auth/login/'
 # LOGIN_REDIRECT_URL = '/swagger/'
@@ -51,6 +52,8 @@ LOGOUT_URL = '/users/v1/signout/'
 # LOGOUT_REDIRECT_URL = '/users/v1/signin/'
 # LOGOUT_REDIRECT_URL = None
 
+=======
+>>>>>>> 0c375e4a81df4ee2464fe3d9b3530f7cee7e2ced
 
 # Application definition
 
@@ -65,7 +68,10 @@ BUILT_IN_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
+<<<<<<< HEAD
     'rest_framework.authtoken',
+=======
+>>>>>>> 0c375e4a81df4ee2464fe3d9b3530f7cee7e2ced
     'drf_yasg',         # for swagger documentation
     'debug_toolbar',    # for optimizing APIs
     'corsheaders',      # for CORS (Cross Origin Resource Sharing) security feature.
