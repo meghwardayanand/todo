@@ -50,4 +50,6 @@ urlpatterns = [
 
     path("api-auth/", include('rest_framework.urls', namespace='rest_framework')),
     path('api-token-auth/', obtain_auth_token, name='obtain-token'), # TOKEN AUTHENTICATION
+
+    path('__debug__/', include('debug_toolbar.urls')), # DEBUG
 ]

@@ -26,6 +26,10 @@ SECRET_KEY = 'django-insecure-%%375c2vjhn4vc@_d_^yyf2s7bfgu=1)*en@0215ka#)&x7@b2
 DEBUG = True
 
 ALLOWED_HOSTS = []
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
 
 # DATABASE CONFIGURATIONS
 DATABASE_NAME = 'postgres'
@@ -84,6 +88,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
