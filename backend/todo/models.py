@@ -18,7 +18,7 @@ class TodoItem(models.Model):
     status = models.CharField(max_length=1, choices=Status.choices, default=Status.CREATED.value)
 
     # defined without requirements for better flavor
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='todo_items')
 
     def __str__(self):
         return f"{self.id} | {self.title} | {self.owner}"
